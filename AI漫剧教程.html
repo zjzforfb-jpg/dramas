@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>零门槛AI漫剧全流程教程</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f5f0ff;--card:#fff;--text:#2d2a3e;--text2:#5a5570;--accent:#7c5cfc;--accent-light:#a78bfa;--border:#e8e4f3;--code-bg:#f0ecf9;--shadow:0 4px 20px rgba(124,92,252,.08);--radius:16px;--nav-h:56px}
+[data-theme=dark]{--bg:#16141f;--card:#1e1b2e;--text:#e8e6f0;--text2:#9b95ad;--accent:#a78bfa;--accent-light:#c4b5fd;--border:#2e2844;--code-bg:#242036;--shadow:0 4px 20px rgba(0,0,0,.3)}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;background:var(--bg);color:var(--text);line-height:1.8;font-size:15px;padding-top:var(--nav-h);transition:background .35s,color .35s}
+.navbar{position:fixed;top:0;left:0;width:100%;height:var(--nav-h);background:var(--card);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:1000;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.navbar .logo{font-size:17px;font-weight:700;color:var(--accent);letter-spacing:-.3px}
+.theme-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:var(--bg);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:all .25s;flex-shrink:0}
+.theme-btn:hover{transform:scale(1.08);box-shadow:0 2px 12px rgba(124,92,252,.2)}
+.toc-fab{position:fixed;right:14px;bottom:80px;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;border:none;font-size:22px;cursor:pointer;z-index:999;box-shadow:0 4px 16px rgba(124,92,252,.35);transition:all .3s;display:flex;align-items:center;justify-content:center}
+.toc-fab:hover{transform:scale(1.1)}
+.toc-panel{position:fixed;right:14px;bottom:136px;width:280px;max-height:60vh;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);z-index:998;overflow-y:auto;padding:12px 0;opacity:0;visibility:hidden;transform:translateY(10px) scale(.96);transition:all .3s cubic-bezier(.4,0,.2,1)}
+.toc-panel.show{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
+.toc-panel h4{padding:10px 16px 6px;font-size:13px;color:var(--text2);font-weight:500;text-transform:uppercase;letter-spacing:1px}
+.toc-panel a{display:block;padding:10px 20px;font-size:14px;color:var(--text);text-decoration:none;border-left:3px solid transparent;transition:all .2s}
+.toc-panel a:hover,a.active{background:rgba(124,92,252,.08);border-left-color:var(--accent);color:var(--accent)}
+.container{max-width:640px;margin:0 auto;padding:16px 16px 100px}
+.hero{text-align:center;padding:32px 20px 28px}
+.hero h1{font-size:22px;font-weight:800;line-height:1.4;background:linear-gradient(135deg,var(--accent),#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px}
+.hero p{font-size:14px;color:var(--text2);line-height:1.7}
+.section{margin-bottom:24px}
+.section-header{display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:16px 18px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);transition:all .25s;user-select:none}
+.section-header:hover{box-shadow:var(--shadow);transform:translateY(-1px)}
+.section-header h2{font-size:17px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:10px}
+.section-header h2 .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;font-size:13px;font-weight:700;flex-shrink:0}
+.section-header .arrow{font-size:18px;color:var(--text2);transition:transform .3s;flex-shrink:0}
+.section-header.open .arrow{transform:rotate(180deg)}
+.section-body{padding:0 4px;overflow:hidden;max-height:0;transition:max-height .4s ease,padding .3s}
+.section-body.open{max-height:20000px;padding:16px 4px 4px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:var(--shadow);transition:all .25s}
+.card h3{font-size:15.5px;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.card h3::before{content:'';width:4px;height:18px;border-radius:3px;background:linear-gradient(var(--accent),var(--accent-light));flex-shrink:0}
+.card p{font-size:14px;color:var(--text2);margin-bottom:10px;line-height:1.85}
+.card ul{padding-left:18px;margin-bottom:8px}
+.card li{font-size:14px;color:var(--text2);margin-bottom:6px;line-height:1.75}
+.hl{color:var(--accent);font-weight:600}
+.hl-warn{color:#ef4444;font-weight:600}
+.hl-ok{color:#10b981;font-weight:600}
+.code-block{position:relative;background:var(--code-bg);border:1px solid var(--border);border-radius:12px;padding:14px 52px 14px 14px;margin:10px 0;font-family:"SF Mono",Menlo,"Courier New",monospace;font-size:13px;line-height:1.7;color:var(--text);white-space:pre-wrap;word-break:break-all;overflow-x:auto;user-select:all}
+.copy-btn{position:absolute;top:8px;right:8px;padding:5px 12px;font-size:12px;font-weight:600;border:none;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;cursor:pointer;transition:all .2s;white-space:nowrap}
+.copy-btn:hover{transform:scale(1.05);box-shadow:0 2px 8px rgba(124,92,252,.3)}
+.copy-btn.copied{background:linear-gradient(135deg,#10b981,#34d399)}
+.toast{position:fixed;top:72px;left:50%;transform:translateX(-50%) translateY(-20px);background:var(--card);color:var(--text);padding:10px 24px;border-radius:30px;font-size:14px;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,.15);z-index:9999;opacity:0;pointer-events:none;transition:all .35s cubic-bezier(.68,-.55,.265,1.55);border:1px solid var(--border)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+th{background:var(--code-bg);color:var(--text);font-weight:700;padding:10px 10px;text-align:left;border-bottom:2px solid var(--accent)}
+td{padding:10px 10px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text2);line-height:1.65}
+.folder-tree{background:var(--code-bg);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-family:"SF Mono",Menlo,monospace;font-size:12.5px;line-height:1.85;color:var(--text);white-space:pre;overflow-x:auto;margin:10px 0}
+.checklist{list-style:none;padding-left:0!important}
+.checklist li{padding:10px 12px 10px 36px;position:relative;font-size:14px;color:var(--text2);border-bottom:1px solid var(--border);margin-bottom:0!important}
+.checklist li::before{content:'☐';position:absolute;left:10px;top:10px;font-size:16px;color:var(--accent)}
+.checklist li:last-child{border-bottom:none}
+.sub-title{font-size:14.5px;font-weight:700;color:var(--text);margin:14px 0 8px;padding-left:4px;border-left:3px solid var(--accent-light);padding-left:10px}
+.tip-box{background:linear-gradient(135deg,rgba(124,92,252,.06),rgba(244,114,182,.06));border:1px solid rgba(124,92,252,.15);border-radius:12px;padding:14px 16px;margin:12px 0;font-size:13.5px;line-height:1.75;color:var(--text2)}
+.tip-box strong{color:var(--accent)}
+.warn-box{background:linear-gradient(135deg,rgba(239,68,68,.05),rgba(245,158,11,.05));border:1px solid rgba(239,68,68,.15);border-radius:12px;padding:14px 16px;margin:12px 0;font-size:13.5px;line-height:1.75;color:var(--text2)}
+.warn-box strong{color:#ef4444}
+.footer{text-align:center;padding:30px 0 20px;font-size:12.5px;color:var(--text2);opacity:.7}
+@media(min-width:640px){body{font-size:16px}.container{padding:24px 24px 120px}.hero h1{font-size:26px}.section-header h2{font-size:19px}.toc-panel{right:24px}}
+</style>
+</head>
+<body>
+<nav class="navbar"><div class="logo">🎬 AI漫剧教程</div><button class="theme-btn" id="themeBtn" title="切换模式">🌙</button></nav>
+<div class="toast" id="toast">✅ 复制成功！</div>
+<button class="toc-fab" id="tocFab" title="目录">📑</button>
+<div class="toc-panel" id="tocPanel"><h4>📚 章节导航</h4>
+<a href="#s1" data-s="s1">一、爆款脚本极速生成</a>
+<a href="#s2" data-s="s2">二、风格提示词万能公式</a>
+<a href="#s3" data-s="s3">三、参考图提示词+用法</a>
+<a href="#s4" data-s="s4">四、声音固定与制作</a>
+<a href="#s5" data-s="s5">五、标准化文件夹管理</a>
+<a href="#s6" data-s="s6">六、豆包反推终极版</a>
+<a href="#s7" data-s="s7">七、新手避坑指南</a>
+<a href="#s8" data-s="s8">✅ 完整流程Checklist</a></div>
+
+<div class="container">
+<div class="hero"><h1>零门槛AI漫剧/动画视频<br>全流程教程</h1><p>全程用<span class="hl">豆包+即梦</span>两个免费工具搞定，不用会画画、不用会剪辑，复制粘贴就能出片，<br>亲测单条视频制作时长 ≤ 30分钟 🚀</p></div>
+
+<section class="section" id="s1"><div class="section-header open" onclick="toggleSec(this)"><h2><span class="num">1</span>爆款脚本极速生成</h2><span class="arrow">▼</span></div><div class="section-body open">
+
+<div class="card"><h3>方法1：经典IP魔改法 ⭐</h3><p>借用大众熟知的电影/电视剧/动漫的经典剧情框架，替换成你的专属人设，<span class="hl">既省脑子又自带爆款基因</span></p>
+<div class="sub-title">✅ 直接复制指令模板（改括号里的内容就行）</div>
+<div class="code-block">你是资深AI漫剧脚本师，擅长写1分钟短视频脚本，节奏快、冲突强、结尾留钩子。
+请基于《僵尸先生》开篇1分钟的经典剧情框架，生成一个全新的1分钟分镜脚本，要求：
+1. 角色替换：主角=橘猫九叔，徒弟=小老鼠文才，僵尸王=黑猫，女鬼=白猫，新增角色=黄狗保安队长
+2. 时长：严格控制在60秒，共8-10个分镜，每个分镜标注【时长+镜头语言】
+3. 内容：保留原片"义庄守夜+僵尸异动"的核心情节，加入动物角色的萌系反差感
+4. 台词：简洁口语化，每句不超过15字，标注对应角色
+5. 结尾：第58秒留钩子，比如"黑猫僵尸突然睁开了金色的眼睛"<button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+<div class="tip-box"><strong>💡 进阶优化技巧：</strong><ul style="margin-top:6px;padding-left:16px"><li>可替换IP：《功夫》《大话西游》《甄嬛传》《猫和老鼠》《西游记》（优先选无版权争议的老IP）</li><li>人设差异化：把人类换成动物/水果/文具/表情包，越反差越容易火（如甄嬛传角色换成猫咪）</li><li>批量生成：一次让豆包生成3个不同版本，挑最好的再让它"加强第3、7个分镜的冲突"</li></ul></div>
+</div>
+
+<div class="card"><h3>方法2：爆款视频反推改编法 🔥</h3><p><span class="hl-warn">这是新手最快出爆款的方法，没有之一！</span> 不用自己想剧情，直接抄爆款的骨架，换皮成你的内容。</p>
+<div class="sub-title">第一步：精准反推爆款提示词</div>
+<p>复制抖音/快手的爆款视频链接，发给豆包：</p>
+<div class="code-block">请根据这条视频内容，反推可直接用于AI视频生成的完整分镜提示词，必须严格涵盖以下所有要素，每个要素写详细：
+1. 主体：每个人物/动物的外貌、服装、表情、体型特征
+2. 动作：精确到每个肢体动作、面部表情变化
+3. 场景：环境细节、整体氛围、时间（白天/黑夜/黄昏）
+4. 光影：光线类型（自然光/灯光/月光）、强度、照射方向
+5. 运镜：推/拉/摇/移/俯拍/仰拍/特写，标注每个镜头的运镜方式
+6. 风格：视觉风格、整体色调、画风
+7. 画质：4K、60fps、电影级质感、无模糊、无畸变
+8. 转场：每个分镜之间的转场方式<button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+<div class="sub-title">第二步：一键改编成原创故事</div>
+<p>把豆包反推出来的完整提示词复制，再发给豆包：</p>
+<div class="code-block">你是资深AI胖橘治愈视频创作者（根据你的赛道替换：AI漫剧/悬疑动画/萌宠动画/古风动画），擅长写脚本和改编故事。
+请严格保留上面这个脚本的分镜结构、节奏、冲突点和时长，编写一个情节、人物、场景完全不同，但题材和内核类似的全新原创故事。
+要求：角色全部换成胖橘和它的朋友们，风格治愈搞笑，结尾留一个让人想看下一集的钩子。<button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+<div class="tip-box"><strong>🔧 工具补充：</strong><ul style="margin-top:6px;padding-left:16px"><li>有Gemini的用户：直接上传视频文件，发上面第二步的指令，反推+改编一步到位</li><li>没有链接的情况：把爆款视频文案复制给豆包，加上"请根据这段文案还原成完整的分镜脚本"</li></ul></div>
+</div>
+
+<div class="card"><h3>✅ 脚本二次打磨（必做！）</h3><p>生成脚本后，再发给豆包一句话优化：</p>
+<div class="code-block">请把上面的脚本改成适合即梦AI生成视频的格式，每个分镜单独成段，开头标注【X秒-X秒】，去掉多余的文学描述，只保留AI能识别的具象化内容。<button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+</div>
+
+</div></section>
+
+<section class="section" id="s2"><div class="section-header open" onclick="toggleSec(this)"><h2><span class="num">2</span>风格提示词万能公式</h2><span class="arrow">▼</span></div><div class="section-body open">
+<div class="card"><h3>通用万能公式</h3><p style="font-size:16px;text-align:center;padding:12px;background:var(--code-bg);border-radius:10px;font-weight:700;color:var(--accent)"><code>核心画风 + 色调 + 光影质感 + 细节加成 + 画质参数</code></p></div>
+<div class="card"><h3>热门风格模板库（直接复制）</h3>
+<table><tr><th>视频类型</th><th>直接复制的风格提示词</th></tr><tr><td><span class="hl">治愈系萌宠动画</span></td><td>吉卜力画风，暖色调，柔和自然光，手绘质感，线条流畅，色彩饱和度适中，治愈系氛围，4K，60fps</td></tr><tr><td><span class="hl">国风漫剧</span></td><td>中国风水墨动画，工笔质感，青灰色调，电影级光影，古风建筑细节，飘逸的衣袂，4K，电影级画质</td></tr><tr><td><span class="hl">悬疑惊悚动画</span></td><td>暗黑哥特风格，冷色调，低饱和度，侧光逆光，高对比度，阴影浓重，恐怖氛围，颗粒质感，4K</td></tr><tr><td><span class="hl">3D卡通动画</span></td><td>皮克斯3D风格，明亮鲜艳色调，柔和漫反射光，圆润建模，细腻的毛发质感，4K，60fps</td></tr><tr><td><span class="hl">复古港风动画</span></td><td>80年代香港电影画风，暖黄色调，胶片质感，颗粒感，霓虹灯光影，复古服装，4K</td></tr></table>
+</div>
+<div class="card"><h3>风格一致性控制技巧</h3><ol style="padding-left:18px"><li>把风格提示词<span class="hl">复制粘贴到每一个分镜的最后</span>，确保全片风格统一</li><li>生成第一个分镜后，把满意的截图作为参考图，后续所有分镜都用这张图作为风格参考</li><li>不要在不同分镜里更换风格关键词，否则会出现<span class="hl-warn">画风突变</span></li></ol></div>
+</div></section>
+
+<section class="section" id="s3"><div class="section-header open" onclick="toggleSec(this)"><h2><span class="num">3</span>参考图提示词+用法</h2><span class="arrow">▼</span></div><div class="section-body open">
+<div class="card"><h3>参考图提示词公式</h3>
+<div class="sub-title">① 人物参考图提示词</div><p style="font-size:15px;text-align:center;padding:10px;background:var(--code-bg);border-radius:10px;font-weight:600;color:var(--accent)">角色身份 + 外貌特征 + 服装 + 表情 + 姿势 + 风格 + 画质</p><p>示例：</p><div class="code-block">橘猫九叔，穿着黄色道袍，戴着八卦帽，留着白色胡子，表情严肃，双手背在身后，吉卜力画风，4K，高清正面全身照<button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+<div class="sub-title">② 场景参考图提示词</div><p style="font-size:15px;text-align:center;padding:10px;background:var(--code-bg);border-radius:10px;font-weight:600;color:var(--accent)">场景名称 + 环境细节 + 时间 + 天气 + 风格 + 画质</p><p>示例：</p><div class="code-block">古代义庄，破旧的木质房屋，摆放着棺材，墙上贴着黄色符咒，夜晚，月光透过窗户照进来，阴森氛围，中国风，4K<button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+</div>
+<div class="card"><h3>参考图进阶用法（新手必学）</h3>
+<div class="sub-title">🔒 人物一致性锁定</div><ul><li>先用AI生成一张你满意的主角<span class="hl">正面全身照</span>，保存下来</li><li>后续所有分镜生成时，都上传这张图作为参考图，<span class="hl">参考强度调为 0.7~0.8</span></li><li>提示词里加上<span class="hl">"和参考图中的人物完全一致，外貌、服装、体型不变"</span></li></ul>
+<div class="sub-title">🏠 场景一致性锁定</div><ul><li>先生成主场景的全景图，作为固定参考图</li><li>同一场景的不同镜头，都用这张全景图作为参考，只改变运镜和人物位置</li></ul>
+<div class="sub-title">🎨 多参考图融合</div><ul><li>最多上传 <span class="hl">3张参考图</span>，分别对应人物、场景、风格</li><li>比如：1张主角图 + 1张场景图 + 1张风格图，AI会自动融合三者的特征</li></ul>
+</div>
+</div></section>
+
+<section class="section" id="s4"><div class="section-header open" onclick="toggleSec(this)"><h2><span class="num">4</span>声音固定与制作</h2><span class="arrow">▼</span></div><div class="section-body open">
+<div class="card"><h3>方法1：即梦自带音频提取法 ✨ 最方便</h3><ol style="padding-left:18px"><li>先用即梦生成一段完整的剧情视频</li><li>用剪映导入这段视频，点击<span class="hl">"音频分离"</span>，提取所有角色配音</li><li>把每个角色的配音剪成单独片段，重命名保存（如"橘猫九叔-台词1"）</li><li>后续所有视频，都用这些提取出来的音频片段，直接导入剪映对应到分镜即可</li></ol></div>
+<div class="card"><h3>方法2：抖音AI音频提取法 🎤 音色丰富</h3><ol style="padding-left:18px"><li>在抖音搜索"AI配音"，找到你喜欢音色的视频（优先选明确标注AI生成的）</li><li>复制视频链接，用<span class="hl">"轻抖"小程序</span>提取无水印视频</li><li>导入剪映，分离音频，截取需要的片段保存</li></ol><div class="warn-box"><strong>⚠️ 版权提示：</strong>绝对不要提取真人演员的原声，只提取AI生成的配音，避免版权纠纷！</div></div>
+<div class="card"><h3>方法3：TTS固定音色生成法 🎯 最稳定</h3><ol style="padding-left:18px"><li>打开豆包的<span class="hl">"语音合成"</span>功能，选择喜欢的音色</li><li>把脚本里的台词逐句复制进去，生成音频</li><li>同一个角色永远用同一个音色，不要更换</li><li>进阶：用即梦的<span class="hl">"音色克隆"</span>功能，克隆专属音色，只需30秒语音样本</li></ol></div>
+<div class="card"><h3>音频后期加分技巧 🎵</h3><ul><li>加合适的背景音乐（剪映免费音乐库），音量调为 <span class="hl">-20 ~ -15</span>，不要盖过人声</li><li>加音效：开门声、脚步声、风声等提升沉浸感（剪映音效库免费）</li><li>统一全片音量：选中所有音频，点击<span class="hl">"音量统一"</span>，避免忽大忽小</li></ul></div>
+</div></section>
+
+<section class="section" id="s5"><div class="section-header open" onclick="toggleSec(this)"><h2><span class="num">5</span>标准化文件夹管理</h2><span class="arrow">▼</span></div><div class="section-body open">
+<div class="card"><h3>📁 统一命名规则</h3><p style="font-size:16px;text-align:center;padding:12px;background:var(--code-bg);border-radius:10px;font-weight:700;color:var(--accent)"><code>日期 - 项目名称 - 集数</code></p><p style="text-align:center;color:var(--text2);font-size:13px">示例：<code>20240520-橘猫九叔-第1集</code></p></div>
+<div class="card"><h3>📂 固定文件夹结构（每个项目都建这5个文件夹）</h3><div class="folder-tree">📂 20240520-橘猫九叔-第1集
+├─ 📝 脚本
+│  ├─ 初稿.txt
+│  ├─ 优化后分镜脚本.txt
+│  └─ 最终提示词.txt
+├─ 🖼️ 参考图
+│  ├─ 人物参考
+│  │  ├─ 橘猫九叔.png
+│  │  └─ 小老鼠文才.png
+│  ├─ 场景参考
+│  └─ 风格参考
+├─ 🎵 音频
+│  ├─ 配音
+│  ├─ 背景音乐.mp3
+│  └─ 音效
+├─ 🎬 生成素材
+│  ├─ 分镜1.mp4
+│  └─ 分镜2.mp4
+└─ ✅ 成品
+   └─ 橘猫九叔第1集-最终版.mp4</div>
+</div>
+<div class="card"><h3>好习惯 ✅</h3><ul><li>每做完一个项目，就把整个文件夹归档备份到云盘</li><li>所有文件都用中文命名，不要用数字或字母缩写，避免后期找不到</li></ul></div>
+</div></section>
+
+<section class="section" id="s6"><div class="section-header open" onclick="toggleSec(this)"><h2><span class="num">6</span>豆包反推提示词终极版</h2><span class="arrow">▼</span></div><div class="section-body open">
+<div class="card"><h3>🚀 通用终极反推指令（直接复制，不用改）</h3>
+<div class="code-block">请深度分析这条视频的每一个镜头，反推可用于即梦AI生成的逐帧分镜提示词，要求：
+1. 严格按照【镜头序号+时长+运镜+主体+动作+场景+光影+风格+画质】的格式输出
+2. 主体描述精确到五官、服装、配饰、表情、体型，动作描述精确到肢体的每一个部位
+3. 场景描述包含所有可见的背景细节、物品摆放、环境氛围
+4. 光影描述包含光线来源、颜色、强度、照射方向、阴影效果
+5. 运镜描述包含镜头运动速度、起止位置、景别（全景/中景/近景/特写）
+6. 标注每个镜头之间的转场方式（硬切/淡入淡出/滑动/缩放）
+7. 所有描述都是具象化的、AI能识别的，不要有抽象的文学描述
+8. 最后单独总结这条视频的整体风格、色调和节奏特点<button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+</div>
+<div class="card"><h3>反推结果优化技巧 💡</h3><ol style="padding-left:18px"><li>反推完成后，让豆包<span class="hl">"把上面的提示词简化，去掉重复内容，保留核心要素"</span></li><li>把整体风格总结复制下来，<span class="hl">粘贴到每一个分镜的提示词最后</span></li><li>把反推的人物和场景描述，改成你自己的原创角色和场景</li></ol></div>
+</div></section>
+
+<section class="section" id="s7"><div class="section-header open" onclick="toggleSec(this)"><h2><span class="num">7</span>新手必看避坑指南</h2><span class="arrow">▼</span></div><div class="section-body open">
+<div class="card"><h3>🛡️ 版权避坑</h3><ul><li><span class="hl-warn">不要</span>用有版权的IP形象（比如迪士尼、漫威）</li><li><span class="hl-warn">不要</span>用真人明星的脸生成视频</li><li><span class="hl-warn">不要</span>用未经授权的音乐和真人配音</li></ul></div>
+<div class="card"><h3>🤖 AI生成避坑</h3><ul><li>单个分镜时长一般固定 <span class="hl">12~15秒</span>（12秒是随便时长，15秒是即梦时长）</li><li><span class="hl-warn">不要</span>让AI生成复杂的手部动作和多人互动，容易变形</li><li>生成不满意就多生成几次，或者微调提示词里的动作描述</li></ul></div>
+<div class="card"><h3>📈 流量避坑</h3><ul><li>视频时长控制在 <span class="hl">50~60秒</span>，完播率最高</li><li>开头 <span class="hl">3秒必须有冲突或亮点</span>，留住观众</li><li>结尾一定要留钩子，引导用户看下一集</li></ul></div>
+</div></section>
+
+<section class="section" id="s8"><div class="section-header open" onclick="toggleSec(this)"><h2><span class="num">8</span>✅ 完整流程Checklist</h2><span class="arrow">▼</span></div><div class="section-body open">
+<div class="card"><h3>从0到1完整流程（照着打勾就行）</h3><ul class="checklist">
+<li>找一个同赛道的爆款视频，复制链接</li>
+<li>用豆包反推爆款分镜提示词</li>
+<li>让豆包改编成你的原创故事脚本</li>
+<li>优化脚本成即梦可用的分镜格式</li>
+<li>生成主角和场景的参考图</li>
+<li>准备好所有角色的配音音频</li>
+<li>逐分镜生成AI视频</li>
+<li>导入剪映，拼接视频，匹配音频</li>
+<li>加背景音乐和音效</li>
+<li>导出1080P 60fps的视频，发布 🎉</li>
+</ul></div>
+</div></section>
+
+<div class="footer">Made with ❤️ · AI漫剧教学站 · 复制粘贴就能出片</div>
+</div>
+
+<script>
+const themeBtn=document.getElementById('themeBtn');
+const tocFab=document.getElementById('tocFab');
+const tocPanel=document.getElementById('tocPanel');
+const toast=document.getElementById('toast');
+let isDark=false;
+function setTheme(d){isDark=d;document.documentElement.setAttribute('data-theme',d?'dark':'light');themeBtn.textContent=d?'☀️':'🌙';localStorage.setItem('ai-theme',d?'dark':'light')}
+if(localStorage.getItem('ai-theme')==='dark')setTheme(true);
+themeBtn.onclick=function(){setTheme(!isDark)};
+tocFab.onclick=function(e){e.stopPropagation();tocPanel.classList.toggle('show')};
+document.addEventListener('click',function(e){if(!tocPanel.contains(e.target)&&e.target!==tocFab)tocPanel.classList.remove('show')});
+document.querySelectorAll('.toc-panel a').forEach(function(a){a.addEventListener('click',function(){tocPanel.classList.querySelectorAll('a').forEach(function(b){b.classList.remove('active')});this.classList.add('active');tocPanel.classList.remove('show')})});
+
+function toggleSec(el){el.classList.toggle('open');const body=el.nextElementSibling;body.classList.toggle('open')}
+function showToast(msg){toast.textContent=msg||'✅ 复制成功！';toast.classList.add('show');setTimeout(function(){toast.classList.remove('show')},1800)}
+
+function copyCode(btn){const block=btn.parentElement;const text=block.textContent.replace(/复制$/,'').trim();navigator.clipboard.writeText(text).then(function(){btn.textContent='已复制 ✓';btn.classList.add('copied');showToast();setTimeout(function(){btn.textContent='复制';btn.classList.remove('copied')},1800)}).catch(function(){const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.left='-9999px';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');btn.textContent='已复制 ✓';btn.classList.add('copied');showToast()}catch(err){showToast('❌ 复制失败，请手动选择')}finally{document.body.removeChild(ta);setTimeout(function(){btn.textContent='复制';btn.classList.remove('copied')},1800)}})}
+
+let scrollTicking=false;
+window.addEventListener('scroll',function(){if(!scrollTicking){requestAnimationFrame(function(){const sections=document.querySelectorAll('.section[id]');const mid=window.innerHeight/2+80;sections.forEach(function(s){const rect=s.getBoundingClientRect();if(rect.top<=mid&&rect.bottom>=mid){document.querySelectorAll('.toc-panel a').forEach(function(a){a.classList.toggle('active',a.getAttribute('data-s')===s.id)})}});scrollTicking=false});scrollTicking=true}});
+</script>
+</body>
+</html>
